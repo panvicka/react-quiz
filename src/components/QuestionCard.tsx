@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { AnswerObject } from "../App";
-import "./QuestionCard.css";
+import { Wrapper, ButtonWrapper } from "./QuestionCard.styles";
 
 // becauase of typescript we need type for props
 type Props = {
@@ -26,13 +26,11 @@ const QuestionCard: React.FC<Props> = ({
   if (userAnswer !== undefined) {
     if (userAnswer.correct === true) {
       if (answerButton === null) {
-        
       } else {
-          if (answerButton.current === null) { 
-       
-          } else {
-            console.log(answerButton?.current);
-          }
+        if (answerButton.current === null) {
+        } else {
+          console.log(answerButton?.current);
+        }
       }
     } else {
     }
@@ -40,7 +38,7 @@ const QuestionCard: React.FC<Props> = ({
 
   return (
     <>
-      <div className="question">
+      <Wrapper>
         <p>
           Question: {questionNumber} of {totalQuestions}
         </p>
@@ -50,7 +48,11 @@ const QuestionCard: React.FC<Props> = ({
         <div>
           {answers.map((answer) => {
             return (
-              <div key={answer}>
+              <ButtonWrapper
+                key={answer}
+                correct={userAnswer?.correctAnswer === answer}
+                userClicked={userAnswer?.answer === answer}
+              >
                 <button
                   disabled={!!userAnswer}
                   value={answer}
@@ -59,7 +61,7 @@ const QuestionCard: React.FC<Props> = ({
                 >
                   <span dangerouslySetInnerHTML={{ __html: answer }}></span>
                 </button>
-              </div>
+              </ButtonWrapper>
             );
           })}
           {userAnswer ? (
@@ -70,7 +72,7 @@ const QuestionCard: React.FC<Props> = ({
             )
           ) : null}
         </div>
-      </div>
+      </Wrapper>
     </>
   );
 };
